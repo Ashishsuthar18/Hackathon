@@ -116,7 +116,7 @@ IMS-Hackathon
 1. Clone the repository
 
 ```
-git clone https://github.com/Prathamy09/hackaton.git
+git clone https://github.com/Ashishsuthar18/hackathon.git
 ```
 
 2. Navigate to the backend directory
@@ -146,7 +146,8 @@ frontend/login.html
 ## Demo Credentials
 
 Username = admin
-...
+```
+
 Password = admin123
 
 ## Future Enhancements
