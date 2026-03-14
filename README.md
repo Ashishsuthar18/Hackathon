@@ -146,6 +146,7 @@ frontend/login.html
 ## Demo Credentials
 
 Username = admin
+...
 Password = admin123
 
 ## Future Enhancements
