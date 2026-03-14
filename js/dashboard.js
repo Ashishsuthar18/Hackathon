@@ -1,7 +1,7 @@
 let products = JSON.parse(localStorage.getItem("products")) || [];
 
 /* SAVE DATA */
-function saveProducts(){
+function saveProducts() {
 localStorage.setItem("products", JSON.stringify(products));
 updateDashboard();
 loadProducts();
@@ -9,16 +9,16 @@ loadDropdown();
 }
 
 /* DASHBOARD STATS */
-function updateDashboard(){
+function updateDashboard() {
 
 let totalProducts = products.length;
 let totalStock = 0;
 let lowStock = 0;
 
-products.forEach(p=>{
-totalStock += Number(p.stock);
+products.forEach(p => {
+totalStock += Number(p.stock) || 0;
 
-if(p.stock < 10){
+if (p.stock < 10) {
 lowStock++;
 }
 });
@@ -30,14 +30,14 @@ document.getElementById("lowStock").innerText = lowStock;
 }
 
 /* LOAD PRODUCT TABLE */
-function loadProducts(){
+function loadProducts() {
 
 const table = document.querySelector("#productsTable tbody");
-if(!table) return;
+if (!table) return;
 
-table.innerHTML="";
+table.innerHTML = "";
 
-products.forEach((p,index)=>{
+products.forEach((p, index) => {
 
 const row = `
 <tr>
@@ -59,22 +59,22 @@ table.innerHTML += row;
 }
 
 /* ADD PRODUCT */
-function showAddProductModal(){
+function showAddProductModal() {
 
 let name = prompt("Product Name");
-let sku = prompt("SKU");
+let sku = prompt("SKU Code");
 let category = prompt("Category");
-let unit = prompt("Unit");
+let unit = prompt("Unit (pcs/kg)");
 let stock = prompt("Initial Stock");
 
-if(!name) return;
+if (!name) return;
 
 products.push({
-name:name,
-sku:sku,
-category:category,
-unit:unit,
-stock:Number(stock)
+name: name,
+sku: sku,
+category: category,
+unit: unit,
+stock: Number(stock) || 0
 });
 
 saveProducts();
@@ -82,77 +82,70 @@ saveProducts();
 }
 
 /* DELETE PRODUCT */
-function deleteProduct(index){
+function deleteProduct(index) {
 
-if(confirm("Delete this product?")){
-products.splice(index,1);
+if (confirm("Delete this product?")) {
+products.splice(index, 1);
 saveProducts();
 }
 
 }
 
 /* ADD STOCK */
-function addStock(){
+function addStock() {
 
 let qty = Number(document.getElementById("receiptQuantity").value);
-let productName = document.getElementById("receiptProduct").value;
+let select = document.getElementById("receiptProduct");
+let index = select.selectedIndex - 1;
 
-if(!productName || qty <= 0){
+if (index < 0 || qty <= 0) {
 alert("Select product and quantity");
 return;
 }
 
-let product = products.find(p => p.name === productName);
+products[index].stock += qty;
 
-if(product){
-product.stock += qty;
 saveProducts();
-}
 
 }
 
 /* REMOVE STOCK */
-function removeStock(){
+function removeStock() {
 
 let qty = Number(document.getElementById("deliveryQuantity").value);
-let productName = document.getElementById("deliveryProduct").value;
+let select = document.getElementById("deliveryProduct");
+let index = select.selectedIndex - 1;
 
-if(!productName || qty <= 0){
+if (index < 0 || qty <= 0) {
 alert("Select product and quantity");
 return;
 }
 
-let product = products.find(p => p.name === productName);
+products[index].stock -= qty;
 
-if(product){
-
-product.stock -= qty;
-
-if(product.stock < 0){
-product.stock = 0;
+if (products[index].stock < 0) {
+products[index].stock = 0;
 }
 
 saveProducts();
 
 }
 
-}
-
-/* LOAD DROPDOWN PRODUCTS */
-function loadDropdown(){
+/* LOAD PRODUCT DROPDOWN */
+function loadDropdown() {
 
 let receipt = document.getElementById("receiptProduct");
 let delivery = document.getElementById("deliveryProduct");
 
-if(!receipt || !delivery) return;
+if (!receipt || !delivery) return;
 
-receipt.innerHTML='<option value="">Select Product</option>';
-delivery.innerHTML='<option value="">Select Product</option>';
+receipt.innerHTML = '<option value="">Select Product</option>';
+delivery.innerHTML = '<option value="">Select Product</option>';
 
-products.forEach(p=>{
+products.forEach((p) => {
 
-receipt.innerHTML += `<option value="${p.name}">${p.name}</option>`;
-delivery.innerHTML += `<option value="${p.name}">${p.name}</option>`;
+receipt.innerHTML += `<option>${p.name}</option>`;
+delivery.innerHTML += `<option>${p.name}</option>`;
 
 });
 
@@ -163,28 +156,27 @@ updateDashboard();
 loadProducts();
 loadDropdown();
 
-// Sidebar navigation
+/* SIDEBAR NAVIGATION */
 document.querySelectorAll(".sidebar ul li").forEach(item => {
-item.addEventListener("click", function(){
+
+item.addEventListener("click", function () {
 
 const page = this.getAttribute("data-page");
 
-if(!page) return;
+if (!page) return;
 
-// hide all pages
-document.querySelectorAll(".page").forEach(p=>{
+document.querySelectorAll(".page").forEach(p => {
 p.classList.remove("active");
 });
 
-// show selected page
 document.getElementById(page).classList.add("active");
 
-// active menu highlight
-document.querySelectorAll(".sidebar ul li").forEach(li=>{
+document.querySelectorAll(".sidebar ul li").forEach(li => {
 li.classList.remove("active");
 });
 
 this.classList.add("active");
 
 });
+
 });
