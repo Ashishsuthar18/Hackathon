@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Register</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register - Inventory System</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -12,12 +14,21 @@
 
 <h2>Create Account</h2>
 
-<input type="text" id="username" placeholder="Username"><br><br>
-<input type="password" id="password" placeholder="Password"><br><br>
+<div class="form-group">
+<label>Username</label>
+<input type="text" id="username">
+</div>
+
+<div class="form-group">
+<label>Password</label>
+<input type="password" id="password">
+</div>
 
 <button onclick="register()">Register</button>
 
-<p>Already have account? <a href="index.html">Login</a></p>
+<p style="text-align:center;margin-top:10px">
+<a href="index.html">Back to Login</a>
+</p>
 
 </div>
 </div>
@@ -26,11 +37,11 @@
 
 function register(){
 
-let username = document.getElementById("username").value;
-let password = document.getElementById("password").value;
+let username=document.getElementById("username").value;
+let password=document.getElementById("password").value;
 
-localStorage.setItem("user", username);
-localStorage.setItem("pass", password);
+localStorage.setItem("user",username);
+localStorage.setItem("pass",password);
 
 alert("Account created successfully");
 
