@@ -1,12 +1,18 @@
-document.getElementById("loginForm").addEventListener("submit", function(e) {
-    e.preventDefault();
+document.getElementById("loginForm").addEventListener("submit", function(e){
 
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
+e.preventDefault();
 
-    if(username === "admin" && password === "admin123"){
-        window.location.href = "dashboard.html";
-    } else {
-        document.getElementById("message").innerText = "Invalid login";
-    }
+let username = document.getElementById("username").value;
+let password = document.getElementById("password").value;
+
+if(username === "admin" && password === "admin123"){
+
+window.location="dashboard.html";
+
+}else{
+
+document.getElementById("message").innerText="Invalid login";
+
+}
+
 });
