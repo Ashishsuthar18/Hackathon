@@ -147,7 +147,9 @@ frontend/login.html
 
 Username = admin
 ```
+
 Password = admin123
+
 ```
 
 ## Future Enhancements
