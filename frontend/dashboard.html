@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Inventory System</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h3>Inventory</h3>
+            </div>
+            <ul>
+                <li class="active" data-page="dashboard"><a href="#dashboard">Dashboard</a></li>
+                <li data-page="products"><a href="#products">Products</a></li>
+                <li data-page="stock"><a href="#stock">Stock Operations</a></li>
+                <li class="logout"><a href="login.html">Logout</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Page -->
+            <div id="dashboard" class="page active">
+                <header class="page-header">
+                    <h1>Dashboard</h1>
+                </header>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Total Products</h3>
+                        <div class="stat-number" id="totalProducts">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Stock</h3>
+                        <div class="stat-number" id="totalStock">0</div>
+                    </div>
+                    <div class="stat-card warning">
+                        <h3>Low Stock</h3>
+                        <div class="stat-number" id="lowStock">0</div>
+                    </div>
+                </div>
+                <div class="low-stock-list">
+                    <h3>Low Stock Items (<10) </h3>
+                    <div id="lowStockItems"></div>
+                </div>
+            </div>
+
+            <!-- Products Page -->
+            <div id="products" class="page">
+                <header class="page-header">
+                    <h1>Products</h1>
+                    <button class="btn btn-primary" onclick="showAddProductModal()">+ Add Product</button>
+                </header>
+                <div class="table-container">
+                    <table id="productsTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>SKU</th>
+                                <th>Category</th>
+                                <th>Unit</th>
+                                <th>Stock</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Stock Operations Page -->
+            <div id="stock" class="page">
+                <header class="page-header">
+                    <h1>Stock Operations</h1>
+                </header>
+                <div class="stock-tabs">
+                    <button class="tab-btn active" data-tab="receipts">Receipts (Incoming)</button>
+                    <button class="tab-btn" data-tab="deliveries">Deliveries (Outgoing)</button>
+                </div>
+                <div id="receipts" class="tab-content active">
+                    <h3>Add Stock</h3>
+                    <select id="receiptProduct">
+                        <option value="">Select Product</option>
+                    </select>
+                    <input type="number" id="receiptQuantity" placeholder="Quantity" min="1">
+                    <button class="btn btn-success" onclick="addStock()">Add Stock</button>
+                </div>
+                <div id="deliveries" class="tab-content">
+                    <h3>Remove Stock</h3>
+                    <select id="deliveryProduct">
+                        <option value="">Select Product</option>
+                    </select>
+                    <input type="number" id="deliveryQuantity" placeholder="Quantity" min="1">
+                    <button class="btn btn-danger" onclick="removeStock()">Remove Stock</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add/Edit Product Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add Product</h2>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <form id="productForm">
+                <input type="hidden" id="productId">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="productName" required>
+                </div>
+                <div class="form-group">
+                    <label>SKU</label>
+                    <input type="text" id="productSku" required>
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <input type="text" id="productCategory" required>
+                </div>
+                <div class="form-group">
+                    <label>Unit</label>
+                    <input type="text" id="productUnit" required>
+                </div>
+                <div class="form-group">
+                    <label>Initial Stock</label>
+                    <input type="number" id="productStock" min="0" value="0">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
